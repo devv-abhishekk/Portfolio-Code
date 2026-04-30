@@ -120,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         body: Stack(
           children: [
             // Layer 1: Tech Background Painter
-            RepaintBoundary(
-              child: Positioned.fill(
+            Positioned.fill(
+              child: RepaintBoundary(
                 child: AnimatedBuilder(
                   animation: _bgAnimationController,
                   builder: (context, child) {

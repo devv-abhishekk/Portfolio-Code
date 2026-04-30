@@ -19,7 +19,7 @@ dependencies:
   google_fonts: ^6.2.1
   url_launcher: ^6.2.6
   font_awesome_flutter: ^10.7.0
-  animate_do: ^5.1.0
+  animate_do: ^3.3.4
   visibility_detector: ^0.4.0+2
 
 dev_dependencies:

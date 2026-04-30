@@ -9,6 +9,8 @@ class TechBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (size.width <= 0 || size.height <= 0 || !size.width.isFinite || !size.height.isFinite) return;
+
     final paint = Paint()
       ..color = AppColors.primary.withValues(alpha: 0.04)
       ..strokeWidth = 1.0
