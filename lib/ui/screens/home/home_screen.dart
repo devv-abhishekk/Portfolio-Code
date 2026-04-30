@@ -61,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     for (int i = 0; i < sectionKeys.length; i++) {
       final context = sectionKeys[i].currentContext;
       if (context != null) {
-        final box = context.findRenderObject() as RenderBox?;
-        if (box != null) {
-          final position = box.localToGlobal(Offset.zero).dy.abs();
+        final renderObject = context.findRenderObject();
+        if (renderObject is RenderBox) {
+          final position = renderObject.localToGlobal(Offset.zero).dy.abs();
           if (position < minDistance) {
             minDistance = position;
             newIndex = i;
