@@ -48,6 +48,8 @@ class ProjectModel extends ProjectEntity {
     required super.tags,
     super.playStoreUrl,
     super.appStoreUrl,
+    super.logoAsset,
+    super.screenshotAsset,
   });
 }
 

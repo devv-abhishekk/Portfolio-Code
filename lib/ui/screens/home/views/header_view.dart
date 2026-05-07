@@ -1,3 +1,4 @@
+import 'dart:ui';
 import '../../../../app_export.dart';
 import '../../../../domain/entities/personal_info_entity.dart';
 import '../../../widgets/typing_text.dart';
@@ -121,7 +122,7 @@ class HeaderView extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     _EnhancedButton(
-                      onPressed: () => launchUrl(Uri.parse(personal.resumeUrl)),
+                      onPressed: () => launchUrl(Uri.base.resolve(personal.resumeUrl)),
                       label: 'VIEW RESUME',
                       isPrimary: true,
                     ),
@@ -154,24 +155,53 @@ class HeaderView extends StatelessWidget {
   }
 }
 
-class _SocialIcon extends StatelessWidget {
+class _SocialIcon extends StatefulWidget {
   final IconData icon;
   final String url;
 
   const _SocialIcon({required this.icon, required this.url});
 
   @override
+  State<_SocialIcon> createState() => _SocialIconState();
+}
+
+class _SocialIconState extends State<_SocialIcon> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => launchUrl(Uri.parse(url)),
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.border, width: 1),
-          borderRadius: BorderRadius.circular(12),
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedScale(
+        scale: _isHovered ? 1.15 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        child: InkWell(
+          onTap: () => launchUrl(Uri.parse(widget.url)),
+          customBorder: const CircleBorder(),
+          child: ClipOval(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: _isHovered 
+                      ? Colors.white.withValues(alpha: 0.15)
+                      : Colors.white.withValues(alpha: 0.05),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: _isHovered 
+                        ? Colors.white.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.1),
+                    width: 1.0,
+                  ),
+                ),
+                child: Icon(widget.icon, color: AppColors.onSurface, size: 20),
+              ),
+            ),
+          ),
         ),
-        child: Icon(icon, color: AppColors.onSurface, size: 20),
       ),
     );
   }

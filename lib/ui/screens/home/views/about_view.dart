@@ -268,67 +268,75 @@ class AboutView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 32),
-        ...education.map((e) => _buildTimelineItem(e)),
+        ...education.asMap().entries.map((entry) {
+          final index = entry.key;
+          final e = entry.value;
+          return _buildTimelineItem(e, index == education.length - 1);
+        }),
       ],
     );
   }
 
-  Widget _buildTimelineItem(EducationEntity e) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary,
-                  boxShadow: [
-                    BoxShadow(color: AppColors.primary.withValues(alpha: 0.4), blurRadius: 10),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: 2,
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                ),
-              ),
-            ],
+  Widget _buildTimelineItem(EducationEntity e, bool isLast) {
+    return Stack(
+      children: [
+        if (!isLast)
+          Positioned(
+            left: 5,
+            top: 8,
+            bottom: 0,
+            child: Container(
+              width: 2,
+              color: AppColors.primary.withValues(alpha: 0.2),
+            ),
           ),
-          const SizedBox(width: 24),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    e.degree.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    e.institution,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.onSurface.withValues(alpha: 0.6),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 12,
+              height: 12,
+              margin: const EdgeInsets.only(top: 2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary,
+                boxShadow: [
+                  BoxShadow(color: AppColors.primary.withValues(alpha: 0.4), blurRadius: 10),
                 ],
               ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(width: 24),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      e.degree.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      e.institution,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.onSurface.withValues(alpha: 0.6),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

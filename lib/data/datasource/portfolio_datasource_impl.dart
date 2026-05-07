@@ -98,16 +98,24 @@ class PortfolioDataSourceImpl implements PortfolioDataSource {
       description:
           'Multi-role Flutter application with store management and bulk ordering system.',
       playStoreUrl:
-          'https://play.google.com/store/apps/details?id=com.tribe.app',
+          'https://play.google.com/store/apps/details?id=com.tribebusiness.app&pcampaignid=web_share',
+      appStoreUrl:
+          'https://apps.apple.com/in/app/tribe-business/id6755714832',
       tags: ['Flutter', 'BLoC', 'REST API', 'Multi-role'],
+      logoAsset: 'assets/images/tribe_logo.png',
+      screenshotAsset: 'assets/images/tribe_screenshot.png',
     ),
     ProjectModel(
       title: 'Bharat Beej (BBSSL)',
       description:
           'Agriculture seed distribution mobile application built for the Sahakar Beej network.',
       playStoreUrl:
-          'https://play.google.com/store/apps/details?id=com.bbssl.app',
+          'https://play.google.com/store/apps/details?id=com.sahakarbeej.app&pcampaignid=web_share',
+      appStoreUrl:
+          'https://apps.apple.com/in/app/bharat-beej-bbssl/id6748907019',
       tags: ['Flutter', 'Firebase', 'Agriculture'],
+      logoAsset: 'assets/images/bbssl_logo.png',
+      screenshotAsset: 'assets/images/bbssl_screenshot.png',
     ),
     ProjectModel(
       title: 'Lending App',

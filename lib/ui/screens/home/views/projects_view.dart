@@ -1,3 +1,4 @@
+import 'dart:ui';
 import '../../../../app_export.dart';
 import '../../../../domain/entities/project_entity.dart';
 import '../../../widgets/premium_card.dart';
@@ -65,7 +66,7 @@ class _ProjectCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Project Header / Image Placeholder with Painter
+          // Project Header with screenshot/logo
           Container(
             height: 180,
             width: double.infinity,
@@ -81,21 +82,75 @@ class _ProjectCard extends StatelessWidget {
             ),
             child: Stack(
               children: [
+                // Background: screenshot or grid painter
                 Positioned.fill(
-                  child: CustomPaint(
-                    painter: _ProjectHeaderPainter(),
-                  ),
+                  child: project.screenshotAsset != null
+                      ? ClipRect(
+                          child: Opacity(
+                            opacity: 0.55,
+                            child: Image.asset(
+                              project.screenshotAsset!,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
+                        )
+                      : CustomPaint(painter: _ProjectHeaderPainter()),
                 ),
-                Center(
-                  child: Icon(
-                    FontAwesomeIcons.rocket, 
-                    size: 40, 
-                    color: AppColors.primary.withValues(alpha: 0.4),
+                // Gradient overlay for readability
+                if (project.screenshotAsset != null)
+                  Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            AppColors.background.withValues(alpha: 0.8),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                // Logo or fallback icon
+                if (project.logoAsset != null)
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.3),
+                            blurRadius: 8,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          project.logoAsset!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Center(
+                    child: Icon(
+                      FontAwesomeIcons.rocket, 
+                      size: 40, 
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                    ),
+                  ),
+                // Store link buttons
                 Positioned(
-                  top: 20,
-                  right: 20,
+                  top: 16,
+                  right: 16,
                   child: _ProjectLinks(project: project),
                 ),
               ],
@@ -171,37 +226,77 @@ class _ProjectLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Wrap(
+      spacing: 8,
       children: [
         if (project.playStoreUrl != null)
           _LinkIcon(
             icon: FontAwesomeIcons.googlePlay,
             url: project.playStoreUrl!,
           ),
+        if (project.appStoreUrl != null)
+          _LinkIcon(
+            icon: FontAwesomeIcons.apple,
+            url: project.appStoreUrl!,
+          ),
       ],
     );
   }
 }
 
-class _LinkIcon extends StatelessWidget {
+class _LinkIcon extends StatefulWidget {
   final IconData icon;
   final String url;
 
   const _LinkIcon({required this.icon, required this.url});
 
   @override
+  State<_LinkIcon> createState() => _LinkIconState();
+}
+
+class _LinkIconState extends State<_LinkIcon> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => launchUrl(Uri.parse(url)),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Colors.black26,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.white10),
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedScale(
+        scale: _isHovered ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        child: InkWell(
+          onTap: () => launchUrl(Uri.parse(widget.url)),
+          borderRadius: BorderRadius.circular(8),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: _isHovered 
+                  ? AppColors.primary 
+                  : AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: _isHovered ? 1.0 : 0.3),
+                width: 1.0,
+              ),
+              boxShadow: _isHovered
+                  ? [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      )
+                    ]
+                  : [],
+            ),
+            child: Icon(
+              widget.icon, 
+              color: _isHovered ? Colors.black : Colors.white, 
+              size: 16,
+            ),
+          ),
         ),
-        child: Icon(icon, color: Colors.white, size: 14),
       ),
     );
   }
