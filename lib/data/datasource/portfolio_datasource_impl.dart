@@ -12,8 +12,7 @@ class PortfolioDataSourceImpl implements PortfolioDataSource {
     phone: '+91 8127253679',
     linkedInUrl: 'https://www.linkedin.com/in/abhishek-kumar-548b84192/',
     githubUrl: 'https://github.com/devv-abhishekk',
-    resumeUrl:
-        'https://raw.githubusercontent.com/abhishekkumar/portfolio/main/resume.pdf',
+    resumeUrl: 'resume.pdf',
   );
 
   @override
