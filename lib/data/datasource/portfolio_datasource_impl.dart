@@ -1,15 +1,15 @@
+import '../../core/constants/app_strings.dart';
 import '../models/portfolio_models.dart';
 import 'portfolio_datasource.dart';
 
 class PortfolioDataSourceImpl implements PortfolioDataSource {
   @override
   PersonalInfoModel getPersonalInfo() => const PersonalInfoModel(
-    name: 'ABHISHEK KUMAR',
-    title: 'Flutter Developer | 4+ Years Experience',
-    summary:
-        'Flutter Developer with 4+ years of experience building high-performance cross-platform mobile applications for Android and iOS using Flutter and Dart. Strong expertise in BLoC architecture, REST API integration, Firebase services, and payment gateway integrations including PhonePe and Razorpay. Currently working as a Freelance Flutter Developer.',
-    email: 'dev.abhishekkumar81@gmail.com',
-    phone: '+91 8127253679',
+    name: AppStrings.name,
+    title: AppStrings.title,
+    summary: AppStrings.summary,
+    email: AppStrings.email,
+    phone: AppStrings.phone,
     linkedInUrl: 'https://www.linkedin.com/in/abhishek-kumar-548b84192/',
     githubUrl: 'https://github.com/devv-abhishekk',
     resumeUrl: 'resume.pdf',

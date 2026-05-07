@@ -171,7 +171,7 @@ class AboutView extends StatelessWidget {
   Widget _buildStatsBar() {
     return Row(
       children: [
-        _buildStatItem('3+', 'YEARS\nEXP', AppColors.accent),
+        _buildStatItem('${AppStrings.experienceYears}', 'YEARS\nEXP', AppColors.accent),
         const SizedBox(width: 20),
         _buildStatItem('15+', 'PROJECTS\nCORE', AppColors.primary),
         const SizedBox(width: 20),

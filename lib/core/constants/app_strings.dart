@@ -3,7 +3,9 @@ class AppStrings {
   static const String name = 'ABHISHEK KUMAR';
   static const String role = 'FLUTTER DEVELOPER';
   static const String tagline = 'Available for projects';
-  static const String summary = 'Flutter Developer with 4+ years of experience building high-performance cross-platform mobile applications for Android and iOS using Flutter and Dart. Strong expertise in BLoC architecture, REST API integration, Firebase services, and payment gateway integrations including PhonePe and Razorpay. Currently working as a Freelance Flutter Developer.';
+  static const String experienceYears = '4+';
+  static const String title = 'Flutter Developer | $experienceYears Years Experience';
+  static const String summary = 'Flutter Developer with $experienceYears years of experience building high-performance cross-platform mobile applications for Android and iOS using Flutter and Dart. Strong expertise in BLoC architecture, REST API integration, Firebase services, and payment gateway integrations including PhonePe and Razorpay. Currently working as a Freelance Flutter Developer.';
   
   // Sections
   static const String aboutTitle = 'About Me';
